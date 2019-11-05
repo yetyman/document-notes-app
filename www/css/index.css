@@ -63,3 +63,11 @@ img{
 .footer{
     background: grey;;
 }
+textarea{  
+    /* box-sizing: padding-box; */
+    overflow:hidden;
+    /* demo only: */
+    outline: none;
+    display:block;
+    border-radius:10px;
+  }

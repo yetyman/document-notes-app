@@ -15,6 +15,7 @@ var app = {
         //    this.receivedEvent('deviceready');
         jQuery(document).ready(function ($) {
             $('.calculate-button').on('click', calculateRelativeValues);
+            document.addEventListener('valueChanged', calculateRelativeValues);
             $('.sizing-button').on('click', () => {
                 $('.sizing-box').toggleClass('fit-image');
             });

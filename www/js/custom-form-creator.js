@@ -16,12 +16,15 @@ jQuery(document).ready(function ($) {
             //but either(not both) resizing or repositioning could be requiredx
         }
         DisableConfig(object) {
+            if(!object)
+                object = '.draggable';
             $(object).draggable('disable');
             $(object).resizable('disable');
             $('.show-on-config').removeClass('shown');
-
         }
         EnableConfig(object) {
+            if(!object)
+                object = '.draggable';
             $(object).draggable('enable');
             $(object).resizable('enable');
             $('.show-on-config').addClass('shown');
@@ -29,13 +32,14 @@ jQuery(document).ready(function ($) {
         AddFormItem() {
             var container = $(this);
             $(this).append(`
-            <div class="draggable unset movable-on-config" style="width:100px;height:2em;">
+            <div class="draggable unset movable-on-config" style="width:100px;height:1.5em;padding:5px;">
                 <div class="draggable-handle show-on-config shown">&nbsp</div>
                 <double-input class="fill-parent inputs draggable-item"></double-input>
             </div>`);
 
             var newitem = $(this).find('.unset');
             $(newitem).removeClass('unset');
+            
             var setsize = (ele) => {
                 var cellPercentWidth = 100 * $(ele).outerWidth() / container.innerWidth();
                 var cellPercentHeight = 100 * $(ele).outerHeight() / container.innerHeight();
@@ -69,7 +73,7 @@ jQuery(document).ready(function ($) {
         }
         constructor() {
             super();
-
+            
             Object.defineProperty(this, 'configuring', {
                 get() {
                     if (!this.isConfiguring) this.isConfiguring = false;
@@ -106,19 +110,19 @@ jQuery(document).ready(function ($) {
             this.AddFormItem();
             $(this).children().last()
                 .css("top", "30")
-                .find('input').val("$hi:30");
+                .find('textarea').val("$hi:30");
             this.AddFormItem();
             $(this).children().last()
                 .css("top", "100")
-                .find('input').val("$h:100");
+                .find('textarea').val("$h:100");
             this.AddFormItem();
             $(this).children().last()
                 .css("top", "250")
-                .find('input').val("$g:$hi+$h");
+                .find('textarea').val("$g:$hi+$h");
             this.AddFormItem();
             $(this).children().last()
                 .css("top", "300")
-                .find('input').val("300");
+                .find('textarea').val("300");
 
             this.DisableConfig();
         }

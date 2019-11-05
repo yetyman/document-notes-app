@@ -26,9 +26,11 @@ jQuery(document).ready(function ($) {
             this.getFocusText = this.getFocusText.bind(this);
             this.getUnfocusText = this.getUnfocusText.bind(this);
             this.innerHTML = `
-                <input class="fill-parent show-on-focus"></input>
-                <input class="fill-parent show-on-focusout shown"></input>
+                <textarea class="fill-parent show-on-focus" ></textarea>
+                <textarea class="fill-parent show-on-focusout shown" ></textarea>
             `;
+            this.valueChanged = new CustomEvent('valueChanged', {bubbles:true});
+            
             var focusing = false;
             var focused = ()=>{
                 if(!focusing){
@@ -45,6 +47,8 @@ jQuery(document).ready(function ($) {
                     $(this).find(".show-on-focusout").focus();
                     $(this).find(".show-on-focus").removeClass('shown');
                     $(this).find(".show-on-focusout").addClass('shown');
+                    if(this.valueChanged)
+                        this.dispatchEvent(this.valueChanged);
                     focusing = false;
                 }
             }
