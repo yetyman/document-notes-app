@@ -29,6 +29,20 @@ jQuery(document).ready(function ($) {
             $(object).resizable('enable');
             $('.show-on-config').addClass('shown');
         }
+        SetSize(ele){
+            alert("hi");
+            var container = $(this);
+            var cellPercentWidth = 100 * $(ele).outerWidth() / container.innerWidth();
+            var cellPercentHeight = 100 * $(ele).outerHeight() / container.innerHeight();
+            $(ele).css('width', cellPercentWidth + '%');
+            $(ele).css('height', cellPercentHeight + '%');
+        }
+        SetPos(ele){
+            var l = (100 * parseFloat($(ele).position().left / parseFloat($(ele).parent().width()))) + "%";
+            var t = (100 * parseFloat($(ele).position().top / parseFloat($(ele).parent().height()))) + "%";
+            $(ele).css("left", l);
+            $(ele).css("top", t);
+        }
         AddFormItem() {
             var container = $(this);
             $(this).append(`
@@ -39,36 +53,18 @@ jQuery(document).ready(function ($) {
 
             var newitem = $(this).find('.unset');
             $(newitem).removeClass('unset');
-            
-            var setsize = (ele) => {
-                var cellPercentWidth = 100 * $(ele).outerWidth() / container.innerWidth();
-                var cellPercentHeight = 100 * $(ele).outerHeight() / container.innerHeight();
-                $(ele).css('width', cellPercentWidth + '%');
-                $(ele).css('height', cellPercentHeight + '%');
-            };
-            var setpos = (ele) => {
-                var l = (100 * parseFloat($(ele).position().left / parseFloat($(ele).parent().width()))) + "%";
-                var t = (100 * parseFloat($(ele).position().top / parseFloat($(ele).parent().height()))) + "%";
-                $(ele).css("left", l);
-                $(ele).css("top", t);
-            };
 
-            setsize(newitem);
-            setpos(newitem);
+            this.SetSize(newitem);
+            this.SetPos(newitem);
 
             newitem
                 .draggable({
                     containment: 'parent',
 
-                    stop: function (event, ui) {
-                        //update this form item in the dictionary of form items
-                        setpos(this);
-                    },
+                    stop: container[0].SetPos.bind(container, newitem)
                 })
                 .resizable({
-                    stop: function (event, ui) {
-                        setsize(this);
-                    }
+                    stop: container[0].SetSize.bind(container, newitem)
                 });
         }
         constructor() {
@@ -95,6 +91,8 @@ jQuery(document).ready(function ($) {
             if (!$("link[href='css/custom-form.css']").length)
                 $('<link href="css/custom-form.css" rel="stylesheet">').appendTo("head");
 
+            this.SetPos = this.SetPos.bind(this);
+            this.SetSize = this.SetSize.bind(this);
             this.DisableConfig = this.DisableConfig.bind(this);
             this.EnableConfig = this.EnableConfig.bind(this);
             this.AddFormItem = this.AddFormItem.bind(this);
@@ -107,24 +105,25 @@ jQuery(document).ready(function ($) {
             $(this).find('.add-item').on('click', this.AddFormItem);
 
             //jsut for testing purposes
-            this.AddFormItem();
-            $(this).children().last()
-                .css("top", "30")
-                .find('textarea').val("$hi:30");
-            this.AddFormItem();
-            $(this).children().last()
-                .css("top", "100")
-                .find('textarea').val("$h:100");
-            this.AddFormItem();
-            $(this).children().last()
-                .css("top", "250")
-                .find('textarea').val("$g:$hi+$h");
-            this.AddFormItem();
-            $(this).children().last()
-                .css("top", "300")
-                .find('textarea').val("300");
 
-            this.DisableConfig();
+            setTimeout(() => {
+                
+                for(var i = 0; i<4; i++){
+                    var val = "$"+String.fromCharCode(i+65)+":30";
+                    if(i>0){
+                        val+="+$"+String.fromCharCode(i+64);
+                    }
+                    this.AddFormItem();
+                    var item = $(this).children().last();
+                        item.css("top", i*50+"")
+                        .find('textarea').val(val);
+                        
+                    this.SetSize(item);
+                    this.SetPos(item);
+                }
+            
+                this.DisableConfig();
+            }, 500);
         }
 
     }

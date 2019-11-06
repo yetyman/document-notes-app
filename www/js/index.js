@@ -17,7 +17,9 @@ var app = {
             $('.calculate-button').on('click', calculateRelativeValues);
             document.addEventListener('valueChanged', calculateRelativeValues);
             $('.sizing-button').on('click', () => {
-                $('.sizing-box').toggleClass('fit-image');
+                $('.image-box').toggleClass('fit-image');
+                $('.image-container').toggleClass('fit-parent');
+                $('.image-container').toggleClass('fit-content');
             });
             $('.form-config-button').on('click', () => {
                 $('custom-form-creator')[0].configuring = !$('custom-form-creator')[0].configuring ;
