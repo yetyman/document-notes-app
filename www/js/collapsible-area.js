@@ -40,6 +40,7 @@ jQuery(document).ready(function ($) {
                 set(v) {
                     if(v == 'vertical'){
                         this._orientation = v;
+                        $(this).css("flex-direction", "column");
                         $(this).find('.collapse-width')
                             .removeClass('collapse-width')
                             .addClass('collapse-height');
@@ -47,6 +48,7 @@ jQuery(document).ready(function ($) {
                             .removeClass('fill-width')
                             .addClass('fill-height');
                     }else if(v=='horizontal'){
+                        $(this).css("flex-direction", "row");
                         this._orientation = v;
                         $(this).find('.collapse-height')
                             .removeClass('collapse-height')
@@ -61,11 +63,11 @@ jQuery(document).ready(function ($) {
         }
         connectedCallback() {
             this.innerHTML = `
-            <button class="collapse-button" type="button">
+            <button class="collapse-button" type="button" style="flex-grow:0">
                 List
             </button>
             <div class="collapse-height">
-                <div class="inner">
+                <div class="inner" style="min-width:10px; min-height:10px;flex-grow:0">
                     <ul><li>hello</li></ul>
                 </div>
             </div>
@@ -77,7 +79,12 @@ jQuery(document).ready(function ($) {
             
             b.click(this.toggleCollapse);
         
-            this.orientation = this.getAttribute('orientation');
+            var orient = this.getAttribute('orientation');
+            if(orient)
+            this.orientation = orient;
+            else
+            this.orientation = this.orientation;
+            $(this).css("display", "flex");
         }
 
     }

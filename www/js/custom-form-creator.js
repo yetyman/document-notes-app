@@ -30,7 +30,6 @@ jQuery(document).ready(function ($) {
             $('.show-on-config').addClass('shown');
         }
         SetSize(ele){
-            alert("hi");
             var container = $(this);
             var cellPercentWidth = 100 * $(ele).outerWidth() / container.innerWidth();
             var cellPercentHeight = 100 * $(ele).outerHeight() / container.innerHeight();
@@ -115,7 +114,8 @@ jQuery(document).ready(function ($) {
                     }
                     this.AddFormItem();
                     var item = $(this).children().last();
-                        item.css("top", i*50+"")
+                    item.css("top", i*50+"")
+                        .css("left", "150")
                         .find('textarea').val(val);
                         
                     this.SetSize(item);
