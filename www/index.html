@@ -36,8 +36,8 @@
 
 
     <div class="fit-parent" style="display: flex; flex-direction: column;">
-        <div class="fit-parent" style="display: flex; flex-direction: row; flex-grow: 1;">
-            <div class="fill-width fill-height" style="overflow: auto; flex-grow: 1;">
+        <div class="fit-parent" style="display: flex; flex-direction: row; flex-grow: 1; ">
+            <div class="fill-width fill-height" style="overflow: auto; flex-grow: 1; position: relative;">
                 <div class="image-container fit-parent">
                     <img class="image-box fit-image" src="./img/IMG_20170627_115931.jpg"
                         style="position:relative; visibility: visible;">
@@ -45,7 +45,8 @@
                 </div>
             </div>
 
-            <collapsible-area orientation="horizontal" class="fill-height" style="flex-grow: 0;">
+            <collapsible-area title='Properties' orientation="horizontal" class="fill-height" style="flex-grow: 0;">
+                <ul><li>hello</li></ul>
             </collapsible-area>
 
             <button class="square rounded background-button"
@@ -60,7 +61,8 @@
         </div>
 
         <div style="width: 100%; flex-grow: 0; display:flex; flex-direction: column;">
-            <collapsible-area id="error-view" style="width:100%; flex-grow: 0;">
+            <collapsible-area title='errors' id="error-view" style="width:100%; flex-grow: 0;">
+                <ul><li>hello</li></ul>
             </collapsible-area>
             <div class="footer" style="width: 100%; flex-grow: 0;">Icons made by <a href="https://www.flaticon.com/authors/smashicons"
                     title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/"
@@ -77,16 +79,16 @@
         var image = $('.image-box');
         var w = image.width();
         var h = image.height();
-        var x = image[0].x;
-        if (w != this.imageW || h != this.imageH || x != this.imageX) {
+        //var x = image[0].x;
+        if (w != this.imageW || h != this.imageH){// || x != this.imageX) {
             $('custom-form-creator').width(image.width());
             $('custom-form-creator').height(image.height());
-            $('custom-form-creator').css('left', x);
-            $('custom-form-creator').css('top', image[0].y);
+            //$('custom-form-creator').css('left', x);
+            //$('custom-form-creator').css('top', image[0].y);
         }
         this.imageW = w;
         this.imageH = h;
-        this.imageX = x;
+        //this.imageX = x;
     }
 
     var view = document.getElementById('error-view');

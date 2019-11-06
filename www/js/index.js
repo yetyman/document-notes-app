@@ -17,9 +17,22 @@ var app = {
             $('.calculate-button').on('click', calculateRelativeValues);
             document.addEventListener('valueChanged', calculateRelativeValues);
             $('.sizing-button').on('click', () => {
-                $('.image-box').toggleClass('fit-image');
-                $('.image-container').toggleClass('fit-parent');
-                $('.image-container').toggleClass('fit-content');
+                var c = $('.image-container');
+                if(c.hasClass('fit-parent')){
+                    if(c[0].style.height == 'auto'){
+                        c[0].style.height = null;
+                    }else{
+                        $('.image-box').toggleClass('fit-image');
+                        $('.image-container').toggleClass('fit-parent');
+                        $('.image-container').toggleClass('fit-content');
+                    }
+                }else{
+                    c[0].style.height = 'auto';
+
+                    $('.image-box').toggleClass('fit-image');
+                    $('.image-container').toggleClass('fit-parent');
+                    $('.image-container').toggleClass('fit-content');
+                }
             });
             $('.form-config-button').on('click', () => {
                 $('custom-form-creator')[0].configuring = !$('custom-form-creator')[0].configuring ;
