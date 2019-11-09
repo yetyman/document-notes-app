@@ -42,16 +42,49 @@ jQuery(document).ready(function ($) {
             $(ele).css("left", l);
             $(ele).css("top", t);
         }
-        AddFormItem() {
+        CreateTestFormItem(formtype, i, w, h){
+            
+            var val = "$"+String.fromCharCode(i+65)+":30";
+            if(i>0){
+                val+="+$"+String.fromCharCode(i+64);
+            }
+            this.AddFormItem(formtype,"150",i*50+"",w,h);
+            var item = $(this).children().last();
+            item.find('textarea').val(val);
+                
+            this.SetSize(item);
+            this.SetPos(item);
+        }
+        AddFormItem(formtype, l,t,w,h) {
             var container = $(this);
+            var formEl;
+            //don't forget to put the inputs class on internal double-inputs
+            if (formtype == 'image')
+                formEl = `<image class="fill-parent draggable-item"></image>`;//dont use img. we wwant to be able to display svg too. because why not
+            else if (formtype == 'dropdown')
+                formEl = `<dropdown class="fill-parent draggable-item"></dropdown>`;
+            else if (formtype == 'list')
+                formEl = `<input-list class="fill-parent draggable-item"></input-list>`;
+            else if (formtype == 'checklist')
+                formEl = `<checklist class="fill-parent draggable-item"></checklist>`;
+            else if (formtype == 'radiolist')
+                formEl = `<radiolist class="fill-parent draggable-item"></radiolist>`;
+            else//(!formtype || formtype == 'input') 
+                formEl = `<double-input class="fill-parent inputs draggable-item"></double-input>`;
+            
             $(this).append(`
             <div class="draggable unset movable-on-config" style="width:100px;height:1.5em;padding:5px;">
                 <div class="draggable-handle show-on-config shown">&nbsp</div>
-                <double-input class="fill-parent inputs draggable-item"></double-input>
+                `+formEl+`
             </div>`);
 
             var newitem = $(this).find('.unset');
             $(newitem).removeClass('unset');
+
+            newitem.css("top", t)
+                .css("left", l)
+                .css("width", w)
+                .css("height", h);
 
             this.SetSize(newitem);
             this.SetPos(newitem);
@@ -95,6 +128,7 @@ jQuery(document).ready(function ($) {
             this.DisableConfig = this.DisableConfig.bind(this);
             this.EnableConfig = this.EnableConfig.bind(this);
             this.AddFormItem = this.AddFormItem.bind(this);
+            this.CreateTestFormItem = this.CreateTestFormItem.bind(this);
             //this.export = this.export.bind(this);
             // this.import = this.import.bind(this);
             this.innerHTML = `
@@ -107,20 +141,11 @@ jQuery(document).ready(function ($) {
 
             setTimeout(() => {
                 
-                for(var i = 0; i<4; i++){
-                    var val = "$"+String.fromCharCode(i+65)+":30";
-                    if(i>0){
-                        val+="+$"+String.fromCharCode(i+64);
-                    }
-                    this.AddFormItem();
-                    var item = $(this).children().last();
-                    item.css("top", i*50+"")
-                        .css("left", "150")
-                        .find('textarea').val(val);
-                        
-                    this.SetSize(item);
-                    this.SetPos(item);
-                }
+                this.CreateTestFormItem(null,0);
+                this.CreateTestFormItem(null,1);
+                this.CreateTestFormItem(null,2);
+                this.CreateTestFormItem(null,3);
+                this.CreateTestFormItem('list',4, 150,300);
             
                 this.DisableConfig();
             }, 500);
