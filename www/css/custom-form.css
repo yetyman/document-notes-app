@@ -76,3 +76,39 @@ textarea.shown{
     overflow: hidden;
     
 }
+input-list>*{
+    overflow:visible !important;
+}
+
+.move-to-top-btn{
+    background-image: url('../img/up-arrow-2.svg'); 
+    background-size: cover;
+}
+
+.move-up-btn{
+    background-image: url('../img/up-arrow.svg'); 
+    background-size: cover;
+}
+drop-down>div>button.collapse-button>div{
+    background-image: url('../img/list.svg'); 
+    background-size: cover;
+}
+drop-down>div>button.collapse-button{
+    background-color: #A0A0A0;
+    border-style: outset;
+    border-width: 2px;
+    border-color: #C0C0C0;
+}
+drop-down>div>button.collapse-button:hover{
+    background-color: #808080;
+    border-color: #A0A0A0;
+}
+
+drop-down>div>button.collapse-button:active{
+    border-style: inset;
+    background-color: #A0A0A0;
+    border-color: #A0A0A0;
+}
+.hide{
+    opacity: 0 !important;
+}

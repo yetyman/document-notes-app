@@ -16,6 +16,36 @@ jQuery(document).ready(function ($) {
         getUnfocusText(){
             return $(this).find(".show-on-focusout").val();
         }
+        hideOptions(){
+            $(this).find('.option-area').fadeOut(200);
+        }
+        showOptions(){
+            //option areas are position absolute. it shouldnt matter when fading in and out change its layout.
+            $(this).find('.option-area').fadeIn(200);
+        }
+        setLeftOption(ele){
+            var c = $(this).find('.left').filter('.option-area');
+            this.setOption(c, ele);
+        }
+        setRightOption(ele){
+            var c = $(this).find('.right').filter('.option-area');
+            this.setOption(c, ele);
+        }
+        setOption(container, ele){
+            //set bounds to fill option area unless already set
+            ele = $(ele);
+            if(!(ele.css('left') || ele.css('right') || ele.css('width'))){
+                ele.addClass('fill-width');
+            }
+            if(!(ele.css('height') || ele.css('top') || ele.css('bottom'))){
+                ele.addClass('fill-height');
+            }
+
+            while(container[0].hasChildNodes())
+                container[0].removeChild(container[0].firstChild);
+
+            container[0].appendChild(ele[0]);
+        }
         connectedCallback() {
             if (!$("link[href='css/custom-form.css']").length)
                 $('<link href="css/custom-form.css" rel="stylesheet">').appendTo("head");
@@ -25,37 +55,44 @@ jQuery(document).ready(function ($) {
             this.setUnfocusText = this.setUnfocusText.bind(this);
             this.getFocusText = this.getFocusText.bind(this);
             this.getUnfocusText = this.getUnfocusText.bind(this);
-            this.innerHTML = `
-                <textarea class="fill-parent show-on-focus" ></textarea>
-                <textarea class="fill-parent show-on-focusout shown" ></textarea>
-            `;
+            this.hideOptions = this.hideOptions.bind(this);
+            this.showOptions = this.showOptions.bind(this);
+            this.setLeftOption = this.setLeftOption.bind(this);
+            this.setRightOption = this.setRightOption.bind(this);
+            this.setOption = this.setOption.bind(this);
+            if(this.innerHTML.length == 0)
+                this.innerHTML = `
+                    <textarea class="fill-parent show-on-focus"></textarea>
+                    <textarea class="fill-parent show-on-focusout shown" style="transition:opacity 50"></textarea>
+                    <div class="option-area left" style="box-sizing:border-box; width:.25in; height:.25in; position:absolute; top:0; left:0; margin-left:-.25in"></div>
+                    <div class="option-area right" style="box-sizing:border-box; width:.25in; height:.25in; position:absolute; top:0; right:0; margin-right:-.25in"></div>
+                    `;
+            else{
+                console.log('hi');
+            }
             this.valueChanged = new CustomEvent('valueChanged', {bubbles:true});
             
-            var focusing = false;
-            var focused = ()=>{
-                if(!focusing){
-                    focusing = true;
-                    $(this).find(".show-on-focus").addClass('shown');
-                    $(this).find(".show-on-focus").focus();
+            var focused = (()=>{
+                if(!this.focusing){
+                    this.focusing = true;
                     $(this).find(".show-on-focusout").removeClass('shown');
-                    focusing = false;
+                    $(this).find(".show-on-focusout").addClass('hide');
+                    $(this).find(".show-on-focus").addClass('shown');
+                    //infinite loop somehow.
+                    $(this).find(".show-on-focus").focus();
+                    this.focusing = false;
                 }
-            }
-            var focusouted = ()=>{
-                if(!focusing){
-                    focusing = true;
-                    $(this).find(".show-on-focusout").focus();
-                    $(this).find(".show-on-focus").removeClass('shown');
-                    $(this).find(".show-on-focusout").addClass('shown');
-                    if(this.valueChanged)
-                        this.dispatchEvent(this.valueChanged);
-                    focusing = false;
-                }
-            }
+            }).bind(this);
+            var focusouted = (()=>{
+                $(this).find(".show-on-focusout").removeClass('hide');
+                $(this).find(".show-on-focus").removeClass('shown');
+                $(this).find(".show-on-focusout").addClass('shown');
+                if(this.valueChanged)
+                    this.dispatchEvent(this.valueChanged);
+            }).bind(this);
             $(this).find(".show-on-focus").focus(focused);
             $(this).find(".show-on-focusout").focus(focused);
             $(this).find(".show-on-focus").focusout(focusouted);
-            $(this).find(".show-on-focusout").focusout(focusouted);
         }
 
     }

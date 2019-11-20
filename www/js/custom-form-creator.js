@@ -11,9 +11,9 @@ jQuery(document).ready(function ($) {
         //    this.W = w;
         //    this.H = w;
         //}
-        Reposition() {
-            //hopefully this will all be automatic with percentages.
-            //but either(not both) resizing or repositioning could be requiredx
+        RecalculatePosition(item){
+            this.SetSize(item);
+            this.SetPos(item);
         }
         DisableConfig(object) {
             if(!object)
@@ -42,29 +42,34 @@ jQuery(document).ready(function ($) {
             $(ele).css("left", l);
             $(ele).css("top", t);
         }
-        CreateTestFormItem(formtype, i, w, h){
+        CreateTestFormItem(formtype, l,t, w, h,i){
             
             var val = "$"+String.fromCharCode(i+65)+":30";
             if(i>0){
                 val+="+$"+String.fromCharCode(i+64);
             }
-            this.AddFormItem(formtype,"150",i*50+"",w,h);
+            this.AddFormItem(formtype,l,t,w,h);
             var item = $(this).children().last();
             item.find('textarea').val(val);
                 
             this.SetSize(item);
             this.SetPos(item);
         }
-        AddFormItem(formtype, l,t,w,h) {
+        AddFormItem(formtype,l,t,w,h) {
             var container = $(this);
             var formEl;
             //don't forget to put the inputs class on internal double-inputs
             if (formtype == 'image')
                 formEl = `<image class="fill-parent draggable-item"></image>`;//dont use img. we wwant to be able to display svg too. because why not
             else if (formtype == 'dropdown')
-                formEl = `<dropdown class="fill-parent draggable-item"></dropdown>`;
+                formEl = `<drop-down class="fill-parent draggable-item">
+                    <input-list></input-list>
+                </drop-down>`;
             else if (formtype == 'list')
-                formEl = `<input-list class="fill-parent draggable-item"></input-list>`;
+                formEl = `<input-list class="fill-parent draggable-item">
+                    <double-input class="inputs"></double-input>
+                    <double-input class="inputs"></double-input>
+                </input-list>`;
             else if (formtype == 'checklist')
                 formEl = `<checklist class="fill-parent draggable-item"></checklist>`;
             else if (formtype == 'radiolist')
@@ -129,6 +134,7 @@ jQuery(document).ready(function ($) {
             this.EnableConfig = this.EnableConfig.bind(this);
             this.AddFormItem = this.AddFormItem.bind(this);
             this.CreateTestFormItem = this.CreateTestFormItem.bind(this);
+            this.RecalculatePosition = this.RecalculatePosition.bind(this);
             //this.export = this.export.bind(this);
             // this.import = this.import.bind(this);
             this.innerHTML = `
@@ -141,11 +147,12 @@ jQuery(document).ready(function ($) {
 
             setTimeout(() => {
                 
-                this.CreateTestFormItem(null,0);
-                this.CreateTestFormItem(null,1);
-                this.CreateTestFormItem(null,2);
-                this.CreateTestFormItem(null,3);
-                this.CreateTestFormItem('list',4, 150,300);
+                this.CreateTestFormItem(null,150, 0*50, 100, '1.5em',0);
+                this.CreateTestFormItem(null,150, 1*50, 100, '1.5em',1);
+                this.CreateTestFormItem(null,150, 2*50, 100, '1.5em',2);
+                this.CreateTestFormItem(null,150, 3*50, 100, '1.5em',3);
+                this.CreateTestFormItem('list',150, 4*50, 150,'4.5em',4);
+                this.CreateTestFormItem('dropdown',50, 5*50, 150,50,5);
             
                 this.DisableConfig();
             }, 500);

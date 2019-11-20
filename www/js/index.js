@@ -14,6 +14,12 @@ var app = {
     onDeviceReady: function () {
         //    this.receivedEvent('deviceready');
         jQuery(document).ready(function ($) {
+            setTimeout(() => {
+                calculateRelativeValues();
+            }, 400);
+            setTimeout(() => {
+                calculateRelativeValues();
+            }, 1000);
             $('.calculate-button').on('click', calculateRelativeValues);
             document.addEventListener('valueChanged', calculateRelativeValues);
             $('.sizing-button').on('click', () => {
@@ -61,7 +67,7 @@ var app = {
                         console.info(imageSrc);
                         //var image = new Image();
                         //image.src = imageSrc;
-                        var image =$('.sizing-box');
+                        var image =$('.image-box');
                         image.attr('src', imageSrc);
                         image.on('load',()=>{
 
@@ -69,8 +75,8 @@ var app = {
                             height = image.height();
     
                             
-                            $('custom-form-creator').width($('.sizing-box').width());
-                            $('custom-form-creator').height($('.sizing-box').height());
+                            $('custom-form-creator').width($('.image-box').width());
+                            $('custom-form-creator').height($('.image-box').height());
                             //alert('width =' + width + ', height = ' + height)   ; 
                         });
                     
