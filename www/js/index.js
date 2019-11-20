@@ -1,6 +1,8 @@
 const { BrowserWindow, ipcMain } = require('electron');
 const nativeImage = require('electron').nativeImage;
 const dialog = require('electron').remote;
+
+
 var app = {
     // Application Constructor
     initialize: function () {
