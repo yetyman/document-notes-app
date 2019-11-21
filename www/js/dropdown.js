@@ -12,8 +12,9 @@ jQuery(document).ready(function ($) {
         
         swapItems(el1, el2){
             if(el1 && el2){
-                $(el1).css('transition', 'opacity 200ms');
-                $(el2).css('transition', 'opacity 200ms');
+                this.addTransitionProperty(el1,"opacity 200ms");
+                this.addTransitionProperty(el2,"opacity 200ms");
+
                 $(el1).addClass('hide');
                 $(el2).addClass('hide');
                 setTimeout(() => {
@@ -32,7 +33,7 @@ jQuery(document).ready(function ($) {
             $(this).find('double-input').each((i,e)=>e.showOptions());
             var b = $(this).find('.collapse-cover');
             $(this).find(".collapse-height").addClass('open');
-            $(this).find(".collapse-height").stop().animate({opacity:1}, 200);
+            $(this).find(".collapse-height").removeClass('hide');
             var itemsContainer = $(this).find(".inner");
             var items = itemsContainer.children();
             
@@ -40,12 +41,14 @@ jQuery(document).ready(function ($) {
             {    
                 console.log($(items[0]));
                 itemsContainer = $(items[0]);
-                itemsContainer.finish().animate({"margin-top":0},200);                
+                this.addTransitionProperty(itemsContainer,"margin-top 200ms");
+                itemsContainer.css("margin-top",0);                
             }
 
             itemsContainer.children().each((x,y)=>{
                 console.log($(y));
-                $(y).finish().animate({"height":b.outerHeight()},200).css('overflow', 'visible !important');
+                this.addTransitionProperty(y,"height 200ms");
+                $(y).css("height",b.outerHeight()).css('overflow', 'visible !important');
             });
 
             this.addEventListener('move-up-btn-added',e=>{
@@ -66,25 +69,33 @@ jQuery(document).ready(function ($) {
                     items = itemsContainer.children().toArray();
                     this.itemh = b.outerHeight();
                     $(items).each((x,y)=>{
-                        $(y).finish('height').animate({"height":b.outerHeight()},200).css('overflow', 'visible !important');
+                        this.addTransitionProperty(y,"height 0ms");
+                        $(y).css('height',b.outerHeight()).css('overflow', 'visible !important');
                     });
                 }
             }, 50);
         }
+        addTransitionProperty(ele, newprop){
+            if(!($(ele).css("transition") && $(ele).css("transition").includes(newprop.split(" ")[0])))
+            {
+                $(ele).css("transition",(($(ele).css("transition")&&$(ele).css("transition")+",")&&"")+newprop);
+            }
+        }
         closeCollapse() {
 
             $(this).find('double-input').each((i,e)=>e.hideOptions());
-            clearInterval(this.interval);
             $(this).find(".collapse-height").removeClass('open');
-            $(this).find(".collapse-height").stop().animate({opacity:0}, 200);
+            $(this).find(".collapse-height").addClass('hide');
             var items = $(this).find(".inner").children();
             if(items.length == 1 && items[0].tagName == 'INPUT-LIST')
             {    
-                $(items[0]).finish().animate({"margin-top":"-.25in"},200);                
+                this.addTransitionProperty(items[0],"margin-top 200ms");
+                $(items[0]).css("margin-top","-.25in");                
                 items = $(items[0]).children();
             }
             items.each((x,y)=>{
-                $(y).finish().animate({"height":"0"},200);
+                this.addTransitionProperty(y,"height 0ms");
+                $(y).css("height","0");
             });
         }
         toggleCollapse() {
@@ -133,7 +144,8 @@ jQuery(document).ready(function ($) {
             this.toggleCollapse = this.toggleCollapse.bind(this);
             this.openCollapse = this.openCollapse.bind(this);
             this.closeCollapse = this.closeCollapse.bind(this);
-
+            this.addTransitionProperty = this.addTransitionProperty.bind(this);
+            
             var b = $(this).find(".collapse-button");
             
             b.click(this.toggleCollapse);

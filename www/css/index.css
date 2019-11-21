@@ -91,7 +91,7 @@ button.fill-height{
 .collapse-height{
     background: #ccc;
     overflow-y: scroll;
-    transition: height 200ms;
+    transition: opacity 200ms, height 200ms;
 }
 .collapse-width{
     background: #ccc;

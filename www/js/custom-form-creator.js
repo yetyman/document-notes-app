@@ -1,4 +1,3 @@
-
 jQuery(document).ready(function ($) {
 
     class customFormCreatorClass extends HTMLElement {
@@ -29,18 +28,26 @@ jQuery(document).ready(function ($) {
             $(object).resizable('enable');
             $('.show-on-config').addClass('shown');
         }
-        SetSize(ele){
+        GetSize(ele){
             var container = $(this);
-            var cellPercentWidth = 100 * $(ele).outerWidth() / container.innerWidth();
-            var cellPercentHeight = 100 * $(ele).outerHeight() / container.innerHeight();
-            $(ele).css('width', cellPercentWidth + '%');
-            $(ele).css('height', cellPercentHeight + '%');
+            var width = 100 * $(ele).outerWidth() / container.innerWidth() + '%';
+            var height = 100 * $(ele).outerHeight() / container.innerHeight() + '%';
+            return {width:width,height:height};
         }
-        SetPos(ele){
+        SetSize(ele){
+            var size = this.GetSize(ele);
+            $(ele).css('width', size.width);
+            $(ele).css('height', size.height);
+        }
+        GetPos(ele){
             var l = (100 * parseFloat($(ele).position().left / parseFloat($(ele).parent().width()))) + "%";
             var t = (100 * parseFloat($(ele).position().top / parseFloat($(ele).parent().height()))) + "%";
-            $(ele).css("left", l);
-            $(ele).css("top", t);
+            return {left:l, top:t};
+        }
+        SetPos(ele){
+            var pos = this.GetPos(ele);
+            $(ele).css("left", pos.left);
+            $(ele).css("top", pos.top);
         }
         CreateTestFormItem(formtype, l,t, w, h,i){
             
@@ -97,12 +104,36 @@ jQuery(document).ready(function ($) {
             newitem
                 .draggable({
                     containment: 'parent',
-
+                    drag: (e,ui)=>{
+                        var pos = this.GetPos(ui.helper[0]);
+                        this.BoundsChanged(
+                        { 
+                            top:pos.top, 
+                            left:pos.left, 
+                            width:ui.helper[0].style.width,
+                            height:ui.helper[0].style.height 
+                        });
+                    },
                     stop: container[0].SetPos.bind(container, newitem)
                 })
                 .resizable({
-                    stop: container[0].SetSize.bind(container, newitem)
+                    stop: container[0].SetSize.bind(container, newitem),
+                    resize: (e,ui)=>{
+                        var size = this.GetSize(ui.helper[0]);
+                        this.BoundsChanged(
+                        { 
+                            top:ui.helper[0].style.top,//$(this)[0].style.top, 
+                            left:ui.helper[0].style.left, 
+                            width:size.width,
+                            height:size.height 
+                        });
+                    },
                 });
+        }
+        BoundsChanged(bounds){
+            //fire event
+            //bounds should be top,left,width,height
+            this.dispatchEvent(new Event('bounds-changed', {bounds:bounds, element:this} ));
         }
         constructor() {
             super();
@@ -128,6 +159,8 @@ jQuery(document).ready(function ($) {
             if (!$("link[href='css/custom-form.css']").length)
                 $('<link href="css/custom-form.css" rel="stylesheet">').appendTo("head");
 
+            this.GetPos = this.GetPos.bind(this);
+            this.GetSize = this.GetSize.bind(this);
             this.SetPos = this.SetPos.bind(this);
             this.SetSize = this.SetSize.bind(this);
             this.DisableConfig = this.DisableConfig.bind(this);
@@ -135,6 +168,7 @@ jQuery(document).ready(function ($) {
             this.AddFormItem = this.AddFormItem.bind(this);
             this.CreateTestFormItem = this.CreateTestFormItem.bind(this);
             this.RecalculatePosition = this.RecalculatePosition.bind(this);
+            this.BoundsChanged = this.BoundsChanged.bind(this);
             //this.export = this.export.bind(this);
             // this.import = this.import.bind(this);
             this.innerHTML = `
