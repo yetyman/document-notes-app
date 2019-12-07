@@ -1,0 +1,25 @@
+{
+  "main": "cdv-electron-main.js",
+  "name": "com.document.notes",
+  "displayName": "DocumentNotesApp",
+  "version": "1.0.0",
+  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "dependencies": {
+    "algebra.js": "^0.2.6",
+    "cordova-electron": "^1.1.1",
+    "cordova-jquery": "^0.1.6",
+    "electron": "^7.1.1",
+    "jquery": "^3.4.1",
+    "jquery-ui": "^1.12.1",
+    "jquery-ui-dist": "^1.12.1",
+    "mathjs": "^6.2.3",
+    "numeral": "^2.0.6",
+    "require": "^2.4.20"
+  },
+  "homepage": "http://cordova.io",
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Apache Cordova Team",
+    "email": "dev@cordova.apache.org"
+  }
+}

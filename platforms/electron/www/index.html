@@ -1,0 +1,115 @@
+<!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+<!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">-->
+<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+<link href="css/index.css" rel="stylesheet">
+<link href="css/custom-form.css" rel="stylesheet">
+<link href="css/OpenSans.css" rel="stylesheet">
+<link href="css/jquery-ui.min.css" rel="stylesheet">
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/numeral.min.js"></script>
+<script src="js/algebra-0.2.6.min.js"></script>
+<script src="js/math.min.js"></script>
+<script src="cordova.js"></script>
+<script src="js/relative-values.js"></script>
+<script src="js/index.js"></script>
+<!--<script src="js/jquery.mobile-1.4.5.min.js"></script>-->
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/jquery.ui.touch-punch.min.js"></script>
+<script src="js/double-input.js"></script>
+<script src="js/dropdown.js"></script>
+<script src="js/input-list.js"></script>
+<script src="js/collapsible-area.js"></script>
+<script src="js/custom-form-creator.js"></script>
+
+<meta name="format-detection" content="telephone=no">
+<meta name="msapplication-tap-highlight" content="no">
+<meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+
+<body class="fit-parent">
+
+
+    <div class="fit-parent" style="display: flex; flex-direction: column;">
+        <div class="fit-parent" style="display: flex; flex-direction: row; flex-grow: 1; ">
+            <div class="fill-width fill-height" style="overflow: auto; flex-grow: 1; position: relative;">
+                <div class="image-container fit-parent">
+                    <img class="image-box fit-image" src="./img/IMG_20170627_115931.jpg"
+                        style="position:relative; visibility: visible;">
+                    <custom-form-creator style="position: absolute; left:0; top:0;"></custom-form-creator>
+                </div>
+            </div>
+
+            <collapsible-area title='Properties' orientation="horizontal" class="fill-height" style="flex-grow: 0;">
+                <ul><li>hello</li></ul>
+            </collapsible-area>
+
+            <button class="square rounded background-button"
+                style="position: absolute; left: 0; top:0; margin:10px;">
+                <div class="fill-parent"></div>
+            </button>
+            <button class="square rounded sizing-button"
+                style="position: absolute; left: 50px; top:0; margin:10px;">
+                <div class="fill-parent"></div>
+            </button>
+            <button class="square rounded form-config-button"
+                style="position: absolute; left: 0px; top:50px; margin:10px;">
+                <div class="fill-parent"></div>
+            </button>
+            <!--<button class="square rounded calculate-button"
+                style="position: absolute; left: 0px; top:100px; margin:10px;"></button>-->
+
+        </div>
+
+        <div style="width: 100%; flex-grow: 0; display:flex; flex-direction: column;">
+            <collapsible-area title='errors' id="error-view" style="width:100%; flex-grow: 0;">
+                <ul><li>hello</li></ul>
+            </collapsible-area>
+            <div class="footer" style="width: 100%; flex-grow: 0;">Icons made by <a href="https://www.flaticon.com/authors/smashicons"
+                    title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/"
+                    title="Flaticon">www.flaticon.com</a></div>
+        </div>
+
+
+</body>
+<script>
+    setInterval(() => {
+        PossibleResize();
+    }, 50);
+    function PossibleResize() {
+        var image = $('.image-box');
+        var w = image.width();
+        var h = image.height();
+        //var x = image[0].x;
+        if (w != this.imageW || h != this.imageH){// || x != this.imageX) {
+            $('custom-form-creator').width(image.width());
+            $('custom-form-creator').height(image.height());
+            //$('custom-form-creator').css('left', x);
+            //$('custom-form-creator').css('top', image[0].y);
+        }
+        this.imageW = w;
+        this.imageH = h;
+        //this.imageX = x;
+    }
+
+    var view = document.getElementById('error-view');
+    view.SetErrors = function (errorList) {
+        var html = '<ul>';
+        errorList.forEach((e) => {
+            html += '<li>' + e + '</li>';
+        })
+        html += '</ul>';
+        var v = $(view).find('.collapse-height');
+        var c = v.find(".inner");
+        c[0].innerHTML = html;
+    }
+</script>
+
+</html>

@@ -1,0 +1,12 @@
+{
+  "browserWindow": {
+    "height": 1080,
+    "webPreferences": {
+      "devTools": true,
+      "nodeIntegration": true
+    },
+    "width": 1920,
+    "darkTheme": true,
+    "resizable": true
+  }
+}

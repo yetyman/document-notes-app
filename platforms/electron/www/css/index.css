@@ -1,0 +1,148 @@
+*{
+    padding: 0;
+    margin: 0;
+    
+    font-family: 'Open Sans', sans-serif;
+}
+.rounded{
+    border-top-right-radius: .1in;
+    border-bottom-left-radius: .1in;
+    border-bottom-right-radius: .1in;
+}
+.square{
+    width: 40px;
+    height: 40px;
+}
+button{
+    outline: none;;
+    user-select: none;
+}
+img{
+    background-image: url('../img/IMG_20170627_115931.jpg');
+    background-size: cover;
+    min-width: 30px;
+    min-height: 30px;
+    user-select: none;
+}
+.background-button>div{
+    background-image: url('../img/image.svg'); 
+    background-size: cover;
+    margin-left:5%; 
+    width:90%; 
+    margin-top:5%; 
+    height:90%
+}
+.sizing-button>div{
+    background-image: url('../img/resize.svg'); 
+    background-size: cover;
+    margin-left:5%; 
+    width:90%; 
+    margin-top:5%; 
+    height:90%
+}
+.form-config-button>div{
+    background-image: url('../img/crossroad.svg'); 
+    background-size: cover;
+    margin-left:5%; 
+    width:90%; 
+    margin-top:5%; 
+    height:90%
+}
+.fit-image{
+    max-width: 100%;
+    max-height: 100%;
+}
+.collapse-button {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+}
+.collapse-cover {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+}
+.fill-width{
+    width: 100%;
+    flex-grow: 1;
+}
+button.fill-height{
+    transform: rotate(-90deg);
+}
+.fill-height{
+    height: 100%;
+    flex-grow: 1;
+}
+.active, .collapse-button:hover {
+    background-color: #555;
+}
+.collapse-height{
+    background: #ccc;
+    overflow-y: scroll;
+    transition: opacity 200ms, height 200ms;
+}
+.collapse-width{
+    background: #ccc;
+    overflow-x: scroll;
+    transition: width 200ms;
+}
+.footer{
+    background: grey;;
+}
+textarea{  
+    /* box-sizing: padding-box; */
+    overflow:hidden;
+    /* demo only: */
+    outline: none;
+    display:block;
+    border-radius:10px;
+}
+  
+.fit-parent{
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    min-width: 0;
+    min-height: 0;
+    max-width: none;
+    max-height: none;
+    width: 100%;
+    height: 100%;
+    resize: none;
+    overflow: hidden;
+}
+.fit-content{
+    width: fit-content;
+    height: fit-content;
+}
+
+button.round{
+    background-color: #A0A0A0;
+    border-style: outset;
+    border-width: 2px;
+    border-color: #C0C0C0;
+}
+button.round:hover{
+    background-color: #808080;
+    border-color: #A0A0A0;
+}
+
+button.round:active{
+    border-style: inset;
+    background-color: #A0A0A0;
+    border-color: #A0A0A0;
+}
