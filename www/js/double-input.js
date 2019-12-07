@@ -62,7 +62,7 @@ jQuery(document).ready(function ($) {
             this.setOption = this.setOption.bind(this);
             if(this.innerHTML.length == 0)
                 this.innerHTML = `
-                    <textarea class="fill-parent show-on-focus"></textarea>
+                    <textarea class="fill-parent show-on-focus">{{raw}}</textarea>
                     <textarea class="fill-parent show-on-focusout shown" style="transition:opacity 50"></textarea>
                     <div class="option-area left" style="box-sizing:border-box; width:.25in; height:.25in; position:absolute; top:0; left:0; margin-left:-.25in"></div>
                     <div class="option-area right" style="box-sizing:border-box; width:.25in; height:.25in; position:absolute; top:0; right:0; margin-right:-.25in"></div>
@@ -72,6 +72,13 @@ jQuery(document).ready(function ($) {
             }
             this.valueChanged = new CustomEvent('valueChanged', {bubbles:true});
             
+
+            this.id = createGuid();
+            var rawBinding = new Vue({
+               // el: '#'+this.id,
+               // props: ['raw']
+            });
+
             var focused = (()=>{
                 if(!this.focusing){
                     this.focusing = true;

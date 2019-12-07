@@ -181,12 +181,12 @@ jQuery(document).ready(function ($) {
 
             setTimeout(() => {
                 
-                this.CreateTestFormItem(null,150, 0*50, 100, '1.5em',0);
+                //this.CreateTestFormItem(null,150, 0*50, 100, '1.5em',0);
                 this.CreateTestFormItem(null,150, 1*50, 100, '1.5em',1);
-                this.CreateTestFormItem(null,150, 2*50, 100, '1.5em',2);
-                this.CreateTestFormItem(null,150, 3*50, 100, '1.5em',3);
-                this.CreateTestFormItem('list',150, 4*50, 150,'4.5em',4);
-                this.CreateTestFormItem('dropdown',50, 5*50, 150,50,5);
+                //this.CreateTestFormItem(null,150, 2*50, 100, '1.5em',2);
+                //this.CreateTestFormItem(null,150, 3*50, 100, '1.5em',3);
+                //this.CreateTestFormItem('list',150, 4*50, 150,'4.5em',4);
+                //this.CreateTestFormItem('dropdown',50, 5*50, 150,50,5);
             
                 this.DisableConfig();
             }, 500);

@@ -1,6 +1,16 @@
 jQuery(document).ready(function ($) {
     class dropDownClass extends HTMLElement {
-
+        export(){
+            return {
+                type:"dropdown",
+                cover:$(this).find('.collapse-cover').ExportableChildren(),
+                content:$(this).find('.inner').ExportableChildren()
+            };
+        }
+        import(settings){
+            this.setCover(formCreator.create(settings.cover));
+            this.setContent(formCreator.create(settings.content));
+        }
         matchElements(arr1, arr2){
             var results = [];
             for(var i = 0; i<arr2.length; i++)
@@ -9,7 +19,6 @@ jQuery(document).ready(function ($) {
                 }
             return results.length==0;
         }
-        
         swapItems(el1, el2){
             if(el1 && el2){
                 this.addTransitionProperty(el1,"opacity 200ms");

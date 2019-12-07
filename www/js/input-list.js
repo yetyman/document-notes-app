@@ -101,12 +101,23 @@ jQuery(document).ready(function ($) {
 
         connectedCallback() {
             this.innerHTML = this.innerHTML + `
+            <double-input v-for="input in data" raw={{input.raw}}</double-input>
             <div class="addremove" style="align-self:stretch; flex-grow:0; flex-basis:.25in; display:flex; flex-direction:row; justify-content:space-between;">
                 <button class="subtract round" style="width:.25in; flex-grow:0; box-sizing:border-box">-</button>
                 <button class="add round" style="width:.25in; flex-grow:0; box-sizing:border-box">+</button>
             </div>
             `;
 
+            this.id = createGuid();
+
+            var inputsRepeater = new Vue({
+                el:'#'+this.id,
+                data:[
+                    {
+                        raw:"joijo",
+                    }
+                ]
+            });
             //this.toggleCollapse = this.toggleCollapse.bind(this);
 
             var children = $(this).children().not('.addremove');

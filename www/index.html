@@ -8,17 +8,22 @@
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
 <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">-->
-<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval';" />
 <link href="css/index.css" rel="stylesheet">
 <link href="css/custom-form.css" rel="stylesheet">
 <link href="css/OpenSans.css" rel="stylesheet">
 <link href="css/jquery-ui.min.css" rel="stylesheet">
+
+<!-- development version, includes helpful console warnings -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+
 <script src="js/jquery-3.4.1.min.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/numeral.min.js"></script>
 <script src="js/algebra-0.2.6.min.js"></script>
 <script src="js/math.min.js"></script>
 <script src="cordova.js"></script>
+<script src="js/vue.js"></script>
 <script src="js/relative-values.js"></script>
 <script src="js/index.js"></script>
 <!--<script src="js/jquery.mobile-1.4.5.min.js"></script>-->
