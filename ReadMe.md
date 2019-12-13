@@ -1,0 +1,1 @@
+run npm install to install all the necessary packages and make the project functional. good luck
