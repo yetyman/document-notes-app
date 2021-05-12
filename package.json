@@ -20,7 +20,7 @@
     "jquery": "^3.4.1",
     "jquery-ui": "^1.12.1",
     "jquery-ui-dist": "^1.12.1",
-    "mathjs": "^6.2.3",
+    "mathjs": "^7.5.1",
     "numeral": "^2.0.6",
     "require": "^2.4.20"
   },
